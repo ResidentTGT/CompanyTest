@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<table mat-table [dataSource]="oils" class="mat-elevation-z8">
 
     <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Продукт </th>
@@ -56,10 +56,10 @@
     </ng-container>
 
 
-    <tr mat-header-row *matHeaderRowDef="mainDisplayedColumns" >
+    <tr mat-header-row *matHeaderRowDef="mainDisplayedColumns">
     </tr>
-    <tr mat-header-row *matHeaderRowDef="filterDisplayedColumns" >
+    <tr mat-header-row *matHeaderRowDef="filterDisplayedColumns">
     </tr>
 
-    <tr mat-row *matRowDef="let oil; columns: displayedColumns;"></tr>
+    <tr mat-row *matRowDef="let oil; columns: mainDisplayedColumns;"></tr>
 </table>

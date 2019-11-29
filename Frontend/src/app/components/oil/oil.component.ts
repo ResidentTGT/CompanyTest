@@ -8,12 +8,33 @@ import { Oil } from 'src/app/models/oil';
 })
 export class OilComponent implements OnInit {
 
-    public dataSource: Oil[] = [{
-        name: 'olo',
+    public oils: Oil[] = [{
+        name: 'Нефть 1',
         mark: 'Brent',
         seller: 'Norway',
-        region: 'Russia',
-        buyer: 'Russia',
+        region: 'Bergen',
+        buyer: 'Germany',
+    },
+    {
+        name: 'Нефть 2',
+        mark: 'WTI',
+        seller: 'USA',
+        region: 'Alaska',
+        buyer: 'China',
+    },
+    {
+        name: 'Нефть 3',
+        mark: 'Dubai Crude',
+        seller: 'UAE',
+        region: 'Dubai',
+        buyer: 'France',
+    },
+    {
+        name: 'Нефть 4',
+        mark: 'Urals',
+        seller: 'Russia',
+        region: 'Syberia',
+        buyer: 'India',
     }];
 
     public mainDisplayedColumns = [
@@ -23,6 +44,12 @@ export class OilComponent implements OnInit {
     public filterDisplayedColumns = [
         'name-filter', 'mark-filter', 'seller-filter', 'region-filter', 'buyer-filter'
     ];
+
+    public selectedNames: string[] = [];
+    public selectedMarks: string[] = [];
+    public selectedSellers: string[] = [];
+    public selectedRegions: string[] = [];
+    public selectedBuyers: string[] = [];
 
     constructor() { }
 
