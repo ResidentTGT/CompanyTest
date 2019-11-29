@@ -1,0 +1,65 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Продукт </th>
+        <td mat-cell *matCellDef="let oil"> {{oil.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="mark">
+        <th mat-header-cell *matHeaderCellDef> Марка </th>
+        <td mat-cell *matCellDef="let oil"> {{oil.mark}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="seller">
+        <th mat-header-cell *matHeaderCellDef> Продавец </th>
+        <td mat-cell *matCellDef="let oil"> {{oil.seller}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="region">
+        <th mat-header-cell *matHeaderCellDef> Регион </th>
+        <td mat-cell *matCellDef="let oil"> {{oil.region}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="buyer">
+        <th mat-header-cell *matHeaderCellDef> Покупатель </th>
+        <td mat-cell *matCellDef="let oil"> {{oil.buyer}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name-filter">
+        <th mat-header-cell *matHeaderCellDef>
+
+        </th>
+    </ng-container>
+
+    <ng-container matColumnDef="mark-filter">
+        <th mat-header-cell *matHeaderCellDef>
+
+        </th>
+    </ng-container>
+
+    <ng-container matColumnDef="seller-filter">
+        <th mat-header-cell *matHeaderCellDef>
+
+        </th>
+    </ng-container>
+
+    <ng-container matColumnDef="region-filter">
+        <th mat-header-cell *matHeaderCellDef>
+
+        </th>
+    </ng-container>
+
+    <ng-container matColumnDef="buyer-filter">
+        <th mat-header-cell *matHeaderCellDef>
+
+        </th>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="mainDisplayedColumns" >
+    </tr>
+    <tr mat-header-row *matHeaderRowDef="filterDisplayedColumns" >
+    </tr>
+
+    <tr mat-row *matRowDef="let oil; columns: displayedColumns;"></tr>
+</table>
