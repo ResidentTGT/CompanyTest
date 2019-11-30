@@ -3,7 +3,7 @@
     <mat-label>Фильтр</mat-label>
 
     <mat-select (openedChange)="openedChange($event)" [formControl]="selectedFilters" multiple>
-        <mat-form-field>
+        <mat-form-field class="filter">
             <input autocomplete="off" matInput placeholder="Найти..." (keydown)="$event.stopPropagation()"
                 [formControl]="filterFormControl">
         </mat-form-field>

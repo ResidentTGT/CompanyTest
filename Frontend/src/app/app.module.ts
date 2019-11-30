@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './services/in-memory-data.service';
+import { HttpClientModule } from '@angular/common/http';
 
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
@@ -25,7 +28,11 @@ import { FilterComponent } from './components/filter/filter.component';
         MatFormFieldModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
-        MatInputModule
+        MatInputModule,
+        HttpClientModule,
+        HttpClientInMemoryWebApiModule.forRoot(
+            InMemoryDataService, { dataEncapsulation: false }
+        )
     ],
     providers: [],
     bootstrap: [AppComponent],

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Oil } from 'src/app/models/oil';
+import { Observable, EMPTY } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-oil',
@@ -7,47 +10,8 @@ import { Oil } from 'src/app/models/oil';
     styleUrls: ['./oil.component.scss']
 })
 export class OilComponent implements OnInit {
-
-
-
+    public oils: Oil[] = [];
     public viewableOils: Oil[] = [];
-
-    public oils: Oil[] = [{
-        name: 'Нефть 1',
-        mark: 'Brent',
-        seller: 'Norway',
-        region: 'Bergen',
-        buyer: 'Germany',
-    },
-    {
-        name: 'Нефть 2',
-        mark: 'WTI',
-        seller: 'USA',
-        region: 'Alaska',
-        buyer: 'China',
-    },
-    {
-        name: 'Нефть 3',
-        mark: 'Dubai Crude',
-        seller: 'UAE',
-        region: 'Dubai',
-        buyer: 'France',
-    },
-    {
-        name: 'Нефть 4',
-        mark: 'Urals',
-        seller: 'Russia',
-        region: 'Syberia',
-        buyer: 'India',
-    }];
-
-    public mainDisplayedColumns = [
-        'name', 'mark', 'seller', 'region', 'buyer'
-    ];
-
-    public filterDisplayedColumns = [
-        'name-filter', 'mark-filter', 'seller-filter', 'region-filter', 'buyer-filter'
-    ];
 
     public nameFilters: string[] = [];
     public markFilters: string[] = [];
@@ -61,16 +25,38 @@ export class OilComponent implements OnInit {
     public selectedRegions: string[] = [];
     public selectedBuyers: string[] = [];
 
-    constructor() { }
+    public mainDisplayedColumns = [
+        'name', 'mark', 'seller', 'region', 'buyer'
+    ];
+
+    public filterDisplayedColumns = [
+        'name-filter', 'mark-filter', 'seller-filter', 'region-filter', 'buyer-filter'
+    ];
+
+    constructor(private http: HttpClient) { }
 
     ngOnInit() {
-        this.viewableOils = this.oils;
+        this.getOils()
+            .pipe(tap((oils) => {
+                this.viewableOils = this.oils = oils;
 
-        this.nameFilters = Array.from(new Set(this.oils.map((oil) => oil.name)));
-        this.markFilters = Array.from(new Set(this.oils.map((oil) => oil.mark)));
-        this.sellerFilters = Array.from(new Set(this.oils.map((oil) => oil.seller)));
-        this.regionFilters = Array.from(new Set(this.oils.map((oil) => oil.region)));
-        this.buyerFilters = Array.from(new Set(this.oils.map((oil) => oil.buyer)));
+                this.nameFilters = Array.from(new Set(this.oils.map((oil) => oil.name)));
+                this.markFilters = Array.from(new Set(this.oils.map((oil) => oil.mark)));
+                this.sellerFilters = Array.from(new Set(this.oils.map((oil) => oil.seller)));
+                this.regionFilters = Array.from(new Set(this.oils.map((oil) => oil.region)));
+                this.buyerFilters = Array.from(new Set(this.oils.map((oil) => oil.buyer)));
+            })).subscribe();
+    }
+
+    public getOils(): Observable<Oil[]> {
+        return this.http.get<Oil[]>('api/oils')
+            .pipe(
+                tap(_ => console.log('oils fetched')),
+                catchError((error) => {
+                    console.log(`oils not fetched" ${error}`);
+                    return EMPTY;
+                })
+            );
     }
 
     public filterOils(): void {

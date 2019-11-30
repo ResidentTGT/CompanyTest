@@ -9,23 +9,24 @@ import { FormControl } from '@angular/forms';
 export class FilterComponent implements OnInit {
 
     @Input()
-    public filters: string[] = [];
+    public set filters(filters: string[]) {
+        this.viewableFilters = this.allFilters = filters;
+    }
 
     @Output()
     public selectClosed: EventEmitter<string[]> = new EventEmitter<string[]>();
 
     public selectedFilters = new FormControl([]);
     public filterFormControl = new FormControl('');
+    public allFilters: string[] = [];
     public viewableFilters: string[] = [];
 
     constructor() { }
 
     ngOnInit() {
-        this.viewableFilters = this.filters;
-
         this.filterFormControl.valueChanges
             .subscribe((value) =>
-                this.viewableFilters = this.filters
+                this.viewableFilters = this.allFilters
                     .filter((filter) => filter.toLocaleUpperCase().includes(value.toLocaleUpperCase())));
     }
 
