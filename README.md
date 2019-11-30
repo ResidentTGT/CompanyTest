@@ -4,4 +4,4 @@
 
 Для запуска нужно установить npm-пакеты (npm i), далее запустить сервер (ng serve). Зайти в браузер по адресу localhost:4200.
 
-<img src="https://github.com/ResidentTGT/SiburTest/blob/develop/screen.png" >
+<img src="https://github.com/ResidentTGT/CompanyTest/blob/master/screen.png" >
