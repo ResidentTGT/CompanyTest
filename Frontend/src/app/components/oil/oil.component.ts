@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Oil } from 'src/app/models/oil';
-import { Observable, EMPTY } from 'rxjs';
+import { Observable, EMPTY, Subscription } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
@@ -9,7 +9,9 @@ import { HttpClient } from '@angular/common/http';
     templateUrl: './oil.component.html',
     styleUrls: ['./oil.component.scss']
 })
-export class OilComponent implements OnInit {
+export class OilComponent implements OnInit, OnDestroy {
+    private _subscriptions: Subscription[] = [];
+
     public oils: Oil[] = [];
     public viewableOils: Oil[] = [];
 
@@ -36,7 +38,7 @@ export class OilComponent implements OnInit {
     constructor(private http: HttpClient) { }
 
     ngOnInit() {
-        this.getOils()
+        this._subscriptions.push(this._getOils()
             .pipe(tap((oils) => {
                 this.viewableOils = this.oils = oils;
 
@@ -45,18 +47,12 @@ export class OilComponent implements OnInit {
                 this.sellerFilters = Array.from(new Set(this.oils.map((oil) => oil.seller)));
                 this.regionFilters = Array.from(new Set(this.oils.map((oil) => oil.region)));
                 this.buyerFilters = Array.from(new Set(this.oils.map((oil) => oil.buyer)));
-            })).subscribe();
+            }))
+            .subscribe());
     }
 
-    public getOils(): Observable<Oil[]> {
-        return this.http.get<Oil[]>('api/oils')
-            .pipe(
-                tap(_ => console.log('oils fetched')),
-                catchError((error) => {
-                    console.log(`oils not fetched" ${error}`);
-                    return EMPTY;
-                })
-            );
+    ngOnDestroy() {
+        this._subscriptions.forEach((sub) => sub.unsubscribe());
     }
 
     public filterOils(): void {
@@ -67,6 +63,17 @@ export class OilComponent implements OnInit {
                 (!!this.selectedRegions.length && !this.selectedRegions.includes(oil.region)) ||
                 (!!this.selectedBuyers.length && !this.selectedBuyers.includes(oil.buyer))
                 ? false : true));
+    }
+
+    private _getOils(): Observable<Oil[]> {
+        return this.http.get<Oil[]>('api/oils')
+            .pipe(
+                tap(_ => console.log('oils fetched')),
+                catchError((error) => {
+                    console.log(`oils not fetched" ${error}`);
+                    return EMPTY;
+                })
+            );
     }
 
 }

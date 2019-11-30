@@ -8,9 +8,11 @@ import { FormControl } from '@angular/forms';
 })
 export class FilterComponent implements OnInit {
 
+    private _allFilters: string[] = [];
+
     @Input()
     public set filters(filters: string[]) {
-        this.viewableFilters = this.allFilters = filters;
+        this.viewableFilters = this._allFilters = filters;
     }
 
     @Output()
@@ -18,7 +20,6 @@ export class FilterComponent implements OnInit {
 
     public selectedFilters = new FormControl([]);
     public filterFormControl = new FormControl('');
-    public allFilters: string[] = [];
     public viewableFilters: string[] = [];
 
     constructor() { }
@@ -26,7 +27,7 @@ export class FilterComponent implements OnInit {
     ngOnInit() {
         this.filterFormControl.valueChanges
             .subscribe((value) =>
-                this.viewableFilters = this.allFilters
+                this.viewableFilters = this._allFilters
                     .filter((filter) => filter.toLocaleUpperCase().includes(value.toLocaleUpperCase())));
     }
 
