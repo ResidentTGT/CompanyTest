@@ -1,0 +1,18 @@
+<mat-form-field>
+
+    <mat-label>Фильтр</mat-label>
+
+    <mat-select (openedChange)="openedChange($event)" [formControl]="selectedFilters" multiple>
+        <mat-form-field class="filter">
+            <input autocomplete="off" matInput placeholder="Найти..." (keydown)="$event.stopPropagation()"
+                [formControl]="filterFormControl">
+        </mat-form-field>
+
+        <mat-select-trigger>
+            {{selectedFilters.value ? "Выбрано " + selectedFilters.value.length : 'Фильтр'}}
+        </mat-select-trigger>
+
+        <mat-option *ngFor="let filter of viewableFilters" [value]="filter">{{filter}}</mat-option>
+    </mat-select>
+
+</mat-form-field>

@@ -1,0 +1,67 @@
+<table mat-table [dataSource]="viewableOils" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class="column"> Продукт </th>
+        <td mat-cell *matCellDef="let oil" class="column"> {{oil.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="mark">
+        <th mat-header-cell *matHeaderCellDef class="column"> Марка </th>
+        <td mat-cell *matCellDef="let oil" class="column"> {{oil.mark}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="seller">
+        <th mat-header-cell *matHeaderCellDef class="column"> Продавец </th>
+        <td mat-cell *matCellDef="let oil" class="column"> {{oil.seller}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="region">
+        <th mat-header-cell *matHeaderCellDef class="column"> Регион </th>
+        <td mat-cell *matCellDef="let oil" class="column"> {{oil.region}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="buyer">
+        <th mat-header-cell *matHeaderCellDef class="column"> Покупатель </th>
+        <td mat-cell *matCellDef="let oil" class="column"> {{oil.buyer}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name-filter">
+        <th mat-header-cell *matHeaderCellDef>
+            <app-filter (selectClosed)="this.selectedNames=$event;filterOils()" [filters]="nameFilters"></app-filter>
+        </th>
+    </ng-container>
+
+    <ng-container matColumnDef="mark-filter">
+        <th mat-header-cell *matHeaderCellDef>
+            <app-filter (selectClosed)="this.selectedMarks=$event;filterOils()" [filters]="markFilters"></app-filter>
+        </th>
+    </ng-container>
+
+    <ng-container matColumnDef="seller-filter">
+        <th mat-header-cell *matHeaderCellDef>
+            <app-filter (selectClosed)="this.selectedSellers=$event;filterOils()" [filters]="sellerFilters">
+            </app-filter>
+        </th>
+    </ng-container>
+
+    <ng-container matColumnDef="region-filter">
+        <th mat-header-cell *matHeaderCellDef>
+            <app-filter (selectClosed)="this.selectedRegions=$event;filterOils()" [filters]="regionFilters">
+            </app-filter>
+        </th>
+    </ng-container>
+
+    <ng-container matColumnDef="buyer-filter">
+        <th mat-header-cell *matHeaderCellDef>
+            <app-filter (selectClosed)="this.selectedBuyers=$event;filterOils()" [filters]="buyerFilters"></app-filter>
+        </th>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="mainDisplayedColumns">
+    </tr>
+    <tr mat-header-row *matHeaderRowDef="filterDisplayedColumns">
+    </tr>
+
+    <tr  class="lol" mat-row *matRowDef="let oil; columns: mainDisplayedColumns;"></tr>
+</table>
